@@ -1,5 +1,5 @@
 {
-  "name": "@crxjs/vite-plugin",
+  "name": "@b2network/crxjs-vite-plugin",
   "version": "2.0.0-beta.21",
   "description": "Build Chrome Extensions with this Vite plugin.",
   "keywords": [

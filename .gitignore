@@ -22,3 +22,5 @@ packages/vite/LICENSE
 types
 **/.docusaurus
 crxjs.code-workspace
+
+.npmrc
