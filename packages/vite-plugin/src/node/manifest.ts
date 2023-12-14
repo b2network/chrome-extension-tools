@@ -103,6 +103,7 @@ export interface ManifestV3 {
         match_about_blank?: boolean | undefined
         include_globs?: string[] | undefined
         exclude_globs?: string[] | undefined
+        world?: 'MAIN' | 'ISOLATED'
       }[]
     | undefined
   content_security_policy?: {

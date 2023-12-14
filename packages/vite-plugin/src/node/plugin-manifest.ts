@@ -193,12 +193,12 @@ export const pluginManifest: CrxPluginFn = () => {
           // - html files come directly from vite dev server
           // - service worker comes from vite dev server via loader file
           if (manifest.content_scripts)
-            for (const { js = [], matches = [] } of manifest.content_scripts)
+            for (const { js = [], matches = [], world } of manifest.content_scripts)
               for (const id of js) {
                 contentScripts.set(
                   prefix('/', id),
                   formatFileData({
-                    type: 'loader',
+                    type: world === 'MAIN' ? 'module' : 'loader',
                     id,
                     matches,
                     refId: hashScriptId({ type: 'loader', id }),
@@ -209,7 +209,7 @@ export const pluginManifest: CrxPluginFn = () => {
         } else {
           // vite build emits content scripts, html files and service worker
           if (manifest.content_scripts)
-            for (const { js = [], matches = [] } of manifest.content_scripts)
+            for (const { js = [], matches = [], world } of manifest.content_scripts)
               for (const file of js) {
                 const id = join(config.root, file)
                 const refId = this.emitFile({
@@ -220,7 +220,7 @@ export const pluginManifest: CrxPluginFn = () => {
                 contentScripts.set(
                   file,
                   formatFileData({
-                    type: 'loader',
+                    type: world === 'MAIN' ? 'module' : 'loader',
                     id: file,
                     refId,
                     matches,
@@ -276,7 +276,7 @@ export const pluginManifest: CrxPluginFn = () => {
           if (manifest.content_scripts)
             for (const script of manifest.content_scripts) {
               script.js = script.js?.map((id) =>
-                getFileName({ id, type: 'loader' }),
+                getFileName({ id, type: script.world === 'MAIN' ? 'module' : 'loader' }),
               )
             }
         } else {
